@@ -201,6 +201,8 @@ final class Http
             return array();
         }
 
+        $expectedArrayParamsAsKeys = array_flip($expectedArrayParams);
+
         $result = array();
         foreach (explode('&', $queryString) as $arg) {
             $name = $arg;
@@ -217,7 +219,7 @@ final class Http
                 continue;
             }
 
-            if (!in_array($name, $expectedArrayParams)) {
+            if (!array_key_exists($name, $expectedArrayParamsAsKeys)) {
                 throw new \Exception("Parameter '{$name}' is not expected to be an array, but array given");
             }
 
